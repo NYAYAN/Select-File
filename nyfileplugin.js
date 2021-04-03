@@ -18,6 +18,7 @@
         size: undefined, //single file
         totalSize: undefined, //all file
         totalSizeIsValid: undefined, //all file
+        mimeTypes: undefined, //file extension
       };
 
       if (item.dataset.size !== undefined) {
@@ -32,6 +33,9 @@
         if (size) {
           prop.totalSize = totalSize;
         }
+      }
+      if (item.dataset.mimeType !== undefined) {
+        prop.mimeTypes = item.dataset.mimeType.split(",");
       }
 
       NY.FilePlugin.files.push(prop);
@@ -73,7 +77,7 @@
         NY.FilePlugin.files[filteredData.index].files.push(file);
       }
 
-      fileSizeControl(filteredData);
+      fileValidation(filteredData);
       htmlGenerate(NY.FilePlugin.files[filteredData.index]);
       return filteredData;
     }
@@ -134,26 +138,39 @@
 
         if (data.length > 0) {
           data = data[0];
-          fileSizeControl(data);
+          fileValidation(data);
           htmlGenerate(data);
         }
       });
     }
 
-    function fileSizeControl(data) {
+    function fileValidation(data) {
       var totalFilesSize = 0;
       for (file of data.files) {
+        //Size Control
         file.isValid = true;
-        if (file != null) {
-          if (data.size != undefined) {
-            if (data.size < file.size) {
+        if (data.size != undefined) {
+          if (data.size < file.size) {
+            file.isValid = false;
+          }
+        }
+
+        //Mime Control
+        if (file.isValid == true) {
+          var fileType = file.name.split(".");
+          if (fileType.length > 0) {
+            var mime = fileType[fileType.length - 1];
+            if (data.mimeTypes.indexOf(mime) == -1) {
               file.isValid = false;
             }
+          } else {
+            file.isValid = false;
           }
         }
         totalFilesSize += file.size;
       }
 
+      //Total Size Control
       if (data.totalSize != undefined) {
         if (data.totalSize < totalFilesSize) {
           NY.FilePlugin.files[data.index].totalSizeIsValid = false;
