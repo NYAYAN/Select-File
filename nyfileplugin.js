@@ -159,7 +159,7 @@
         if (data.mimeTypes !== undefined && file.isValid == true) {
           var fileType = file.name.split(".");
           if (fileType.length > 0) {
-            var mime = fileType[fileType.length - 1];
+            var mime = "." + fileType[fileType.length - 1];
             if (data.mimeTypes.indexOf(mime) == -1) {
               file.isValid = false;
             }
