@@ -1,0 +1,23 @@
+.ny-file-box {
+  width: 100%;
+}
+.ny-file-box ul.selectedFiles {
+  margin: 0;
+  padding: 0;
+}
+.ny-file-box ul.selectedFiles li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ededed;
+}
+.ny-file-box ul.selectedFiles li:last-child {
+  margin-bottom: 0;
+}
+.ny-file-box .selectedFiles span.remove svg {
+  cursor: pointer;
+  margin-left: 15px;
+  width: 32px;
+  height: 32px;
+  fill: #dc3545;
+}
