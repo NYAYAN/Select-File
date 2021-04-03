@@ -11,14 +11,24 @@
 
 <body>
     <div class="ny-file-box">
-        <input type="file" name="file" id="file" class="ny-file" data-type="append" multiple>
+        <label for="file1" class="ny-fake-file-upload">
+            Choose Files
+        </label>
+        <input type="file" name="file" id="file1" class="ny-file" data-type="append" data-size="10000"
+            data-total-size="50000" multiple>
     </div>
 
     <div class="ny-file-box">
-        <input type="file" name="file" id="file" class="ny-file" data-type="selected" multiple>
+        <label for="file2" class="ny-fake-file-upload">
+            Choose Files
+        </label>
+        <input type="file" name="file" id="file2" class="ny-file" data-type="selected" multiple>
         <!-- <ul class="selectedFiles"></ul> -->
     </div>
-    <script src="./index.js"></script>
+
+    <!-- <script src="./nyfileplugin.js"></script> -->
+    <script src="./nyfileplugin.min.js"></script>
+
 </body>
 
 </html>

@@ -1,6 +1,20 @@
 .ny-file-box {
   width: 100%;
 }
+.ny-file-box input.ny-file {
+  display: none;
+}
+.ny-file-box label.ny-fake-file-upload {
+  display: flex;
+  justify-content: center;
+  /* justify-content: space-between; */
+  align-items: center;
+  letter-spacing: 5px;
+  padding: 10px;
+  border: 1px solid gainsboro;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
 .ny-file-box ul.selectedFiles {
   margin: 0;
   padding: 0;
@@ -9,15 +23,36 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  justify-content: flex-end;
   border-bottom: 1px solid #ededed;
+  padding: 0 15px;
 }
 .ny-file-box ul.selectedFiles li:last-child {
   margin-bottom: 0;
 }
+.ny-file-box .selectedFiles span.name {
+  width: 100%;
+}
+
+.ny-file-box .selectedFiles span.remove {
+  width: 55px;
+  text-align: center;
+}
+
 .ny-file-box .selectedFiles span.remove svg {
   cursor: pointer;
-  margin-left: 15px;
-  width: 32px;
-  height: 32px;
   fill: #dc3545;
+}
+
+.ny-file-box .selectedFiles span.size {
+  width: 120px;
+  font-weight: bold;
+}
+.ny-file-box .selectedFiles li.danger {
+  color: #dc3545;
+  background-color: #dc354505;
+}
+.ny-file-box .selectedFiles li.success {
+  color: #28a745;
+  background-color: #28a74514;
 }
