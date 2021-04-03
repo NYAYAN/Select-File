@@ -32,6 +32,8 @@
 }
 .ny-file-box .selectedFiles span.name {
   width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .ny-file-box .selectedFiles span.remove {

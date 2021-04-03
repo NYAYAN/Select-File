@@ -15,7 +15,7 @@
         index: index, //index
         key: key++, //file upload key
         type: item.dataset.type, // selected | append
-        size: undefined, //single file
+        size: undefined, //single file (byte) => (1MB - 1048576 byte)
         totalSize: undefined, //all file
         totalSizeIsValid: undefined, //all file
         mimeTypes: undefined, //file extension
@@ -156,7 +156,7 @@
         }
 
         //Mime Control
-        if (file.isValid == true) {
+        if (data.mimeTypes !== undefined && file.isValid == true) {
           var fileType = file.name.split(".");
           if (fileType.length > 0) {
             var mime = fileType[fileType.length - 1];
@@ -186,7 +186,7 @@
         size = size / 1024;
         i++;
       } while (size > 1024);
-      return Math.max(size, 0.1).toFixed(1) + NY.FilePlugin.config.byteUnits[i];
+      return Math.max(size, 0.1).toFixed(2) + NY.FilePlugin.config.byteUnits[i];
     }
 
     NY.FilePlugin.config.byteUnits = [
