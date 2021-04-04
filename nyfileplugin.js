@@ -33,7 +33,9 @@
   window.onload = function () {
     var fileInputs = document.querySelectorAll(".ny-file");
     var key = 100001;
+    fileInputs = Array.prototype.slice.call(fileInputs);
     fileInputs.forEach(function (item, index) {
+      assignProperty(item);
       item.value = "";
       item.dataset.key = key;
       var prop = {
@@ -42,7 +44,6 @@
         type: item.dataset.type, // selected | append
         size: undefined, //single file (byte) => (1MB - 1048576 byte)
         totalSize: undefined, //all file
-        totalSizeIsValid: undefined, //all file
         mimeTypes: undefined, //file accept extension
         errors: { extension: false, fileSize: false, totalFilesSize: false }, //fileValidation methods
       };
@@ -89,6 +90,46 @@
       });
     });
 
+    function assignProperty(input) {
+      Object.defineProperty(input, "filesIsValid", {
+        value: function () {
+          var data = NY.FilePlugin.files.filter(function (item) {
+            return item.key == input.dataset.key;
+          });
+          if (data.length > 0) {
+            data = data[0];
+            if (
+              data.errors.extension ||
+              data.errors.fileSize ||
+              data.errors.totalFilesSize
+            ) {
+              return false;
+            }
+          }
+          return true;
+        },
+        writable: false,
+        enumerable: false,
+        configurable: false,
+      });
+
+      Object.defineProperty(input, "filesData", {
+        value: function () {
+          var data = NY.FilePlugin.files.filter(function (item) {
+            return item.key == input.dataset.key;
+          });
+
+          if (data.length > 0) {
+            return data[0];
+          }
+          return null;
+        },
+        writable: false,
+        enumerable: false,
+        configurable: false,
+      });
+    }
+
     function changeTrigger(item, files) {
       var selectedFileEl = document.querySelectorAll(
         'ul.selectedFiles[data-key="' + item.dataset.key + '"]'
@@ -116,9 +157,10 @@
         NY.FilePlugin.files[data.index].files = [];
       }
 
-      for (file of files) {
+      files = Array.prototype.slice.call(files);
+      files.forEach(function (file) {
         NY.FilePlugin.files[data.index].files.push(file);
-      }
+      });
 
       fileValidation(data);
       htmlGenerate(NY.FilePlugin.files[data.index]);
@@ -216,7 +258,8 @@
         input.parentNode.insertBefore(errorEl, input.nextSibling);
       } else {
         if (errorEl.length > 0) {
-          errorEl[0].remove();
+          errorEl = errorEl[0];
+          errorEl.parentNode.removeChild(errorEl);
         }
       }
     }
@@ -248,7 +291,7 @@
         totalFilesSize: false,
       };
       var totalFilesSize = 0;
-      for (file of data.files) {
+      data.files.forEach(function (file) {
         //Size Control
         file.isValid = true;
         if (data.size != undefined) {
@@ -274,16 +317,11 @@
           errors.extension = true;
         }
         totalFilesSize += file.size;
-      }
+      });
 
       //Total Size Control
       if (data.totalSize != undefined) {
-        if (data.totalSize < totalFilesSize) {
-          NY.FilePlugin.files[data.index].totalSizeIsValid = false;
-          errors.totalFilesSize = true;
-        } else {
-          NY.FilePlugin.files[data.index].totalSizeIsValid = true;
-        }
+        errors.totalFilesSize = data.totalSize < totalFilesSize;
       }
       NY.FilePlugin.files[data.index].errors = errors;
     }
