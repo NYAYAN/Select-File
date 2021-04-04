@@ -25,10 +25,28 @@
   justify-content: space-between;
   justify-content: flex-end;
   border-bottom: 1px solid #ededed;
-  padding: 0 15px;
+  padding: 10px 15px;
 }
 .ny-file-box ul.selectedFiles li:last-child {
   margin-bottom: 0;
+}
+
+.ny-file-box ul.errors {
+  list-style: none;
+  margin: 0 0 15px 0;
+  padding: 0 0 0 15px;
+  border-bottom: 1px solid gray;
+}
+.ny-file-box ul.errors li {
+  padding-bottom: 10px;
+  color: #dc3545;
+  position: relative;
+}
+.ny-file-box ul.errors li::after {
+  content: "*";
+  position: absolute;
+  left: -10px;
+  top: 3px;
 }
 .ny-file-box .selectedFiles span.name {
   width: 100%;
@@ -37,8 +55,9 @@
 }
 
 .ny-file-box .selectedFiles span.remove {
-  width: 55px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ny-file-box .selectedFiles span.remove svg {
