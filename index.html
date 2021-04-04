@@ -15,7 +15,11 @@
             Choose Files
         </label>
         <input type="file" name="file" id="file1" class="ny-file" data-type="append" data-size="10485760"
-            data-total-size="104857600" accept=".png,.jpeg,.docx" multiple>
+            data-total-size="104857600" accept=".png,.jpeg,.docx"
+            data-file-size-error-message="Tekli dosya seçim boyutunu aştınız -->"
+            data-total-size-error-message="Maximum yükleyebileceğiniz boyutu aştınız -->"
+            data-extension-error-message="Seçtiğiniz dosyaların uzantısı desteklenmemektedir. -->"
+             multiple>
     </div>
 
     <div class="ny-file-box">
