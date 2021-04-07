@@ -62,25 +62,29 @@
         }
       }
 
-      if (item.accept !== undefined) {
+      if (item.accept !== undefined && item.accept.length > 0) {
         prop.mimeTypes = item.accept.split(",");
       }
 
-      //Messages
-      if (item.dataset.fileSizeErrorMessage !== undefined) {
-        NY.FilePlugin.config.messages.fileSizeErrorMessage =
-          item.dataset.fileSizeErrorMessage;
-      }
-      if (item.dataset.totalSizeErrorMessage !== undefined) {
-        NY.FilePlugin.config.messages.totalSizeErrorMessage =
-          item.dataset.totalSizeErrorMessage;
-      }
+      prop.isShowErrorMessage =
+        item.dataset.showErrorMessage === "false" ? false : true;
+      if (prop.isShowErrorMessage) {
+        //Messages
+        if (item.dataset.fileSizeErrorMessage !== undefined) {
+          NY.FilePlugin.config.messages.fileSizeErrorMessage =
+            item.dataset.fileSizeErrorMessage;
+        }
+        if (item.dataset.totalSizeErrorMessage !== undefined) {
+          NY.FilePlugin.config.messages.totalSizeErrorMessage =
+            item.dataset.totalSizeErrorMessage;
+        }
 
-      if (item.dataset.extensionErrorMessage !== undefined) {
-        NY.FilePlugin.config.messages.extensionErrorMessage =
-          item.dataset.extensionErrorMessage;
+        if (item.dataset.extensionErrorMessage !== undefined) {
+          NY.FilePlugin.config.messages.extensionErrorMessage =
+            item.dataset.extensionErrorMessage;
+        }
+        //Messages
       }
-      //Messages
 
       NY.FilePlugin.files.push(prop);
       item.addEventListener("change", function (e) {
@@ -215,51 +219,53 @@
       var errorEl = document.querySelectorAll(
         "ul.errors[data-key='" + data.key + "']"
       );
-      if (
-        data.errors.extension ||
-        data.errors.fileSize ||
-        data.errors.totalFilesSize
-      ) {
-        var input = document.querySelectorAll(
-          "input.ny-file[data-key='" + data.key + "']"
-        );
+      if (data.isShowErrorMessage) {
+        if (
+          data.errors.extension ||
+          data.errors.fileSize ||
+          data.errors.totalFilesSize
+        ) {
+          var input = document.querySelectorAll(
+            "input.ny-file[data-key='" + data.key + "']"
+          );
 
-        if (errorEl.length == 0) {
-          errorEl = document.createElement("ul");
+          if (errorEl.length == 0) {
+            errorEl = document.createElement("ul");
+          } else {
+            errorEl = errorEl[0];
+          }
+
+          var errHtml = "";
+          errorEl.classList.add("errors");
+          errorEl.dataset.key = data.key;
+
+          if (data.errors.extension) {
+            errHtml +=
+              "<li>" +
+              NY.FilePlugin.config.messages.extensionErrorMessage +
+              "</li>";
+          }
+          if (data.errors.fileSize) {
+            errHtml +=
+              "<li>" +
+              NY.FilePlugin.config.messages.fileSizeErrorMessage +
+              "</li>";
+          }
+          if (data.errors.totalFilesSize) {
+            errHtml +=
+              "<li>" +
+              NY.FilePlugin.config.messages.totalSizeErrorMessage +
+              "</li>";
+          }
+
+          errorEl.innerHTML = errHtml;
+          input = input[0];
+          input.parentNode.insertBefore(errorEl, input.nextSibling);
         } else {
-          errorEl = errorEl[0];
-        }
-
-        var errHtml = "";
-        errorEl.classList.add("errors");
-        errorEl.dataset.key = data.key;
-
-        if (data.errors.extension) {
-          errHtml +=
-            "<li>" +
-            NY.FilePlugin.config.messages.extensionErrorMessage +
-            "</li>";
-        }
-        if (data.errors.fileSize) {
-          errHtml +=
-            "<li>" +
-            NY.FilePlugin.config.messages.fileSizeErrorMessage +
-            "</li>";
-        }
-        if (data.errors.totalFilesSize) {
-          errHtml +=
-            "<li>" +
-            NY.FilePlugin.config.messages.totalSizeErrorMessage +
-            "</li>";
-        }
-
-        errorEl.innerHTML = errHtml;
-        input = input[0];
-        input.parentNode.insertBefore(errorEl, input.nextSibling);
-      } else {
-        if (errorEl.length > 0) {
-          errorEl = errorEl[0];
-          errorEl.parentNode.removeChild(errorEl);
+          if (errorEl.length > 0) {
+            errorEl = errorEl[0];
+            errorEl.parentNode.removeChild(errorEl);
+          }
         }
       }
     }
@@ -305,7 +311,7 @@
         if (data.mimeTypes !== undefined && file.isValid == true) {
           var fileType = file.name.split(".");
           if (fileType.length > 0) {
-            var mime = "." + fileType[fileType.length - 1];
+            var mime = "." + fileType[fileType.length - 1].toLowerCase();
             if (data.mimeTypes.indexOf(mime) == -1) {
               file.isValid = false;
             }

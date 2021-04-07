@@ -7,27 +7,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+
+    <style>
+        ol li span {
+            display: inline-block;
+            width: 320px;
+            font-weight: bold;
+        }
+
+        .section {
+            border: 1px solid rgb(167, 165, 165);
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="ny-file-box">
-        <label for="file1" class="ny-fake-file-upload">
-            Choose Files
-        </label>
-        <input type="file" name="file" id="file1" class="ny-file" data-type="append" data-size="10485760"
-            data-total-size="104857600" accept=".png,.jpeg,.docx" 
-            data-file-size-error-message="Tekli dosya seçim boyutunu aştınız -->"
-            data-total-size-error-message="Maximum yükleyebileceğiniz boyutu aştınız -->"
-            data-extension-error-message="Seçtiğiniz dosyaların uzantısı desteklenmemektedir. -->"
-             multiple>
+    <ol>
+        <li><span>Append or Default : </span>data-type = append | selected</li>
+        <li><span>Single file size control :</span> data-size="10485760"</li>
+        <li><span>All File Size Control (Total) :</span> data-total-size="104857600"</li>
+        <li><span>Extension Control :</span> accept=".png,.jpeg,.docx"</li>
+
+        <li><span>File Size Error Message :</span> data-file-size-error-message</li>
+        <li><span>All File Size Control (Total) Error Message :</span> data-total-size-error-message</li>
+        <li><span>Extension Error Message :</span> data-extension-error-message</li>
+        <li><span>Show Error Message :</span>data-validate-message = true | false (default true) </li>
+
+        <li>document.querySelector('#file1').filesIsValid() : true | false</li>
+        <li>document.querySelector('#file2').filesIsValid() : true | false</li>
+        <li>document.querySelector('#file3').filesIsValid() : true | false</li>
+
+        <li>document.querySelector('#file1').filesData() : Object Type</li>
+        <li>document.querySelector('#file2').filesData() : Object Type</li>
+        <li>document.querySelector('#file3').filesData() : Object Type</li>
+    </ol>
+
+    <div class="section">
+        <ol>
+            <li>Append</li>
+            <li>Sing File Size</li>
+            <li>Total File Size</li>
+            <li>Extension</li>
+            <li>Error Message</li>
+        </ol>
+        <div class="ny-file-box">
+            <label for="file1" class="ny-fake-file-upload">
+                Choose Files
+            </label>
+            <input type="file" name="file" id="file1" class="ny-file" data-type="append" data-size="10485760"
+                data-total-size="104857600" accept=".png,.jpeg,.docx"
+                data-file-size-error-message="Tekli dosya seçim boyutunu aştınız -->"
+                data-total-size-error-message="Maximum yükleyebileceğiniz boyutu aştınız -->"
+                data-extension-error-message="Seçtiğiniz dosyaların uzantısı desteklenmemektedir. -->" multiple>
+        </div>
     </div>
 
-    <div class="ny-file-box">
-        <label for="file2" class="ny-fake-file-upload">
-            Choose Files
-        </label>
-        <input type="file" name="file" id="file2" class="ny-file" data-type="selected" multiple>
-        <!-- <ul class="selectedFiles"></ul> -->
+    <div class="section">
+        <ol>
+            <li>Disabled Error Message</li>
+            <li>Append</li>
+            <li>Sing File Size</li>
+            <li>Total File Size</li>
+            <li>Extension</li>
+        </ol>
+        <div class="ny-file-box">
+            <label for="file2" class="ny-fake-file-upload">
+                Choose Files
+            </label>
+            <input type="file" name="file" id="file2" class="ny-file" data-type="append" data-size="10485760"
+                data-total-size="104857600" accept=".png,.jpeg,.docx" data-show-error-message="false" multiple>
+        </div>
+    </div>
+
+    <div class="section">
+        <ol>
+            <li>Selected</li>
+        </ol>
+        <div class="ny-file-box">
+            <label for="file3" class="ny-fake-file-upload">
+                Choose Files
+            </label>
+            <input type="file" name="file" id="file3" class="ny-file" data-type="selected" multiple>
+            <!-- <ul class="selectedFiles"></ul> -->
+        </div>
     </div>
 
     <script src="./nyfileplugin.js"></script>

@@ -1,5 +1,5 @@
 ### Note : (1MB - 1048576 byte)
-<br/>
+
 
 #### File Upload Plugin Object
 
@@ -25,6 +25,9 @@ accept=".png,.jpeg,.docx" // Selected Files Extension Validation
 danger // Invalid
 success // Valid
 
+// --> Validation Messages Passive
+data-show-error-message // true | false (Default true)
+
 // --> Validation Messages
 data-file-size-error-message // Single File Size Validation Error Message
 data-total-size-error-message // Total Selected File Size Validation Error Message
@@ -33,7 +36,7 @@ data-extension-error-message // Selected Files Extension Validation Message
 // --> Default Validation Messages
 fileSizeErrorMessage: "Tekli dosya seçim boyutunu aştınız"
 totalSizeErrorMessage: "Maximum yükleyebileceğiniz boyutu aştınız"
- extensionErrorMessage: "Seçtiğiniz dosyaların uzantısı desteklenmemektedir."
+extensionErrorMessage: "Seçtiğiniz dosyaların uzantısı desteklenmemektedir."
 
 // --> Example Usage
 // 1
